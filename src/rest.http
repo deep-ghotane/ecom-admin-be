@@ -9,7 +9,12 @@ Content-Type: application/json
   "password": "12345"
 }
 
+<<<<<<< HEAD
+
+#####
+=======
 ###
+>>>>>>> 9a42c9e9e5b45bacf9507a8529a3e8a2515fc1ad
 POST {{apiURL}}/auth/login
 Content-Type: application/json
 
@@ -30,4 +35,18 @@ Content-Type: application/json
 ###
  GET {{apiURL}}/category
 Content-Type: application/json
+
+
+#####
+POST {{apiURL}}/products
+Content-Type: application/json
+
+{
+  "name": "Iphone 16 pro max",
+  "description": "Very expensive phone",
+  "price": 2200,
+  "stock": 100,
+  "images": "https://www.optus.com.au/content/dam/optus/cloud/images/shop/mobile/phones/apple/iphone-17-pro-max/carousel/sd-01-iphone-17-promax-cosmicorange-frontback.version-1757460579643.jpg"
+}
+
 
