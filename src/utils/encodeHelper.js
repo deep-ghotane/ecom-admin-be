@@ -1,5 +1,5 @@
 import bcrypt from "bcryptjs";
-import { config } from "../config/config.js";
+import config from "../config/config.js";
 
 export const encodeFunction = (plaintext) => {
   let salt = bcrypt.genSaltSync(config.salt);
