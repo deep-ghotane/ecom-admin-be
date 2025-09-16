@@ -24,6 +24,17 @@ Content-Type: application/json
 
 }
 
+###
+POST {{apiURL}}/category
+Content-Type: application/json
+
+{
+  "name":"Laptop"
+}
+
+###
+ GET {{apiURL}}/category
+Content-Type: application/json
 
 
 #####

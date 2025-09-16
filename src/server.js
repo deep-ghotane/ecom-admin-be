@@ -3,7 +3,11 @@ import cors from "cors";
 import mongoConnect from "./config/mongoConfig.js";
 import config from "./config/config.js";
 import authRouter from "./routes/authRouter.js";
+
+import categoryRouter from "./routes/categoryRouter.js";
+
 import productRouter from "./routes/productRouter.js";
+
 
 const app = express();
 app.use(cors());
@@ -14,8 +18,15 @@ app.get("/", (req, res) => {
   res.send("I am alive");
 });
 
+// auth router
+app.use("/api/v1/auth", authRouter);
+// category router
+app.use("/api/v1/category", categoryRouter);
+
+
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/products", productRouter);
+
 
 mongoConnect()
   .then(() => {
