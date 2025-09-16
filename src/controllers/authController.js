@@ -1,5 +1,6 @@
 import { findByFilter, newAdmin } from "../models/users/userModel.js";
 import { decodeFunction, encodeFunction } from "../utils/encodeHelper.js";
+import { createAccessToken } from "../utils/jwt.js";
 
 export const createNewUser = async (req, res) => {
   const { email, password } = req.body;
@@ -28,10 +29,21 @@ export const loginUser = async (req, res) => {
     const user = await findByFilter({ email });
     if (user) {
       const result = decodeFunction(password, user.password);
+
+      let payload = {
+        email: user.email,
+      };
+
+      let accessToken = createAccessToken(payload);
+      console.log(111, accessToken);
       if (result) {
         return res
           .status(200)
-          .json({ status: "success", message: "Login Successful" });
+          .json({
+            status: "success",
+            message: "Login Successful",
+            accessToken,
+          });
       } else {
         return res
           .status(500)
