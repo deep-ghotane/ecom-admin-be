@@ -1,12 +1,10 @@
 import express from "express";
-import dotenv from "dotenv";
 import cors from "cors";
 import mongoConnect from "./config/mongoConfig.js";
 import config from "./config/config.js";
+import authRouter from "./routes/authRouter.js";
 
 const app = express();
-
-dotenv.config();
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -14,6 +12,7 @@ app.use(express.urlencoded({ extended: true }));
 app.get("/", (req, res) => {
   res.send("I am alive");
 });
+app.use("/api/v1/auth", authRouter);
 
 mongoConnect()
   .then(() => {
