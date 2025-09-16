@@ -1,6 +1,8 @@
 @apiURL = http://localhost:4002/api/v1
 
 ####
+//Space Added
+
 POST {{apiURL}}/auth
 Content-Type: application/json
 
