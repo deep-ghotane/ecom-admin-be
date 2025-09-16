@@ -1,7 +1,7 @@
 const config = {
   port: process.env.PORT || 4000,
   mongoOptions: {
-    url: process.env.MONGODB_URL || "mongodb://127.0.0.1:27017/e-commerce-be",
+    url: process.env.MONGODB_URL || "mongodb://127.0.0.1:27017/ecommerce-admin",
   },
 
   jwt: {
