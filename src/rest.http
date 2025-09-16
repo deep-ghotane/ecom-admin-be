@@ -1,11 +1,11 @@
-@apiURL = http://localhost:4000/api/v1
+@apiURL = http://localhost:4002/api/v1
 
 ####
 POST {{apiURL}}/auth
 Content-Type: application/json
 
 {
-  "email": "y@gmail.com", 
+  "email": "m@gmail.com", 
   "password": "1234"
 }
 
