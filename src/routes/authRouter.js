@@ -1,8 +1,14 @@
 import express from "express";
-import { createNewUser } from "../controllers/authController.js";
+import { createNewUser, loginUser } from "../controllers/authController.js";
+import {
+  createUserValidation,
+  loginValidation,
+} from "../middleware/joiMiddleware.js";
+// import { authMiddleware } from "../middleware/authMiddleware.js";
 
 const router = express.Router();
 
-router.post("/", createNewUser);
+router.post("/", createUserValidation, createNewUser);
+router.post("/login", loginValidation, loginUser);
 
 export default router;
