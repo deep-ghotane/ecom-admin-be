@@ -12,7 +12,12 @@ app.use(express.urlencoded({ extended: true }));
 app.get("/", (req, res) => {
   res.send("I am alive");
 });
+
+//auth routes
 app.use("/api/v1/auth", authRouter);
+
+//user routes
+app.use("/api/v1/user", userRouter);
 
 mongoConnect()
   .then(() => {
