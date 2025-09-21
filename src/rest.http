@@ -42,12 +42,14 @@ POST {{apiURL}}/products
 Content-Type: application/json
 
 {
-  "name": "Samsung Galaxy S5",
-  "description": "Powerful phone of the past",
-  "price": 1100,
-  "stock": 20,
+  "name": "Nokia Lumia",
+  "description": "Ancient Beast",
+  "price": 300,
+  "stock": 3,
   "category": "68c8f01555ede480a0121d5e",
-  "images": ["https://image-us.samsung.com/SamsungUS/pim/migration/mobile/phones/galaxy-s/sm-g900vzwavzw/Pdpkeyfeature-sm-g900vzwavzw-600x600-C1-062016.jpg?$product-details-jpg$"]
+  "images": ["https://msblogs.thesourcemediaassets.com/2013/08/5543.Lumia925Blk34Combo3ATT_5F00_LR_5F00_1CC4F241.jpg", "https://cdn.mos.cms.futurecdn.net/irLuBqtehijKJiyd8DWum8.jpg"]
 }
 
 
+#####
+GET {{apiURL}}/products
