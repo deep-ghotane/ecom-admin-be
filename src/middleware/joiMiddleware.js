@@ -42,3 +42,25 @@ export const addProductValidation = (req, res, next) => {
 
   joiValidator(createProductSchema, req, res, next);
 };
+
+export const updateProductValidation = (req, res, next) => {
+  let updateProductSchema = Joi.object({
+    id: Joi.string().required(),
+    name: Joi.string(),
+    description: Joi.string(),
+    price: Joi.number(),
+    stock: Joi.number(),
+    category: Joi.string(),
+    images: Joi.array().items(Joi.string()),
+  });
+
+  joiValidator(updateProductSchema, req, res, next);
+};
+
+export const deleteProductValidation = (req, res, next) => {
+  let updateProductSchema = Joi.object({
+    id: Joi.string().required(),
+  });
+
+  joiValidator(updateProductSchema, req, res, next);
+};

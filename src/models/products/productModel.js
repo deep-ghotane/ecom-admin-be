@@ -9,3 +9,11 @@ export const addProduct = (productObj) => {
 export const getAllProductsQuery = () => {
   return Product.find();
 };
+
+export const updateProductQuery = (id, updateObj) => {
+  return Product.findByIdAndUpdate(id, updateObj);
+};
+
+export const deleteProductQuery = (id) => {
+  return Product.findByIdAndDelete(id);
+};

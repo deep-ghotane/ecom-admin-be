@@ -47,9 +47,32 @@ Content-Type: application/json
   "price": 300,
   "stock": 3,
   "category": "68c8f01555ede480a0121d5e",
-  "images": ["https://msblogs.thesourcemediaassets.com/2013/08/5543.Lumia925Blk34Combo3ATT_5F00_LR_5F00_1CC4F241.jpg", "https://cdn.mos.cms.futurecdn.net/irLuBqtehijKJiyd8DWum8.jpg"]
+  "images": ["https://msblogs.thesourcemediaassets.com/2013/08/5543.Lumia925Blk34Combo3ATT_5F00_LR_5F00_1CC4F241.jpg", "https://cdn.mos.cms.futurecdn.net/irLuBqtehijKJiyd8DWum8.jpg"],
+  "speacility": "Doesnt break at all"
 }
 
 
 #####
 GET {{apiURL}}/products
+
+
+
+#####
+#### Update product
+PATCH {{apiURL}}/products
+Content-Type: application/json
+
+{
+  "id": "68cfbe279b2684f7f1118e28", 
+  "description": "Phone is now discontinued."
+}
+
+
+#####
+#### Delete product
+DELETE {{apiURL}}/products
+Content-Type: application/json
+
+{
+  "id": "68cfbe279b2684f7f1118e28"
+}
