@@ -42,11 +42,12 @@ POST {{apiURL}}/products
 Content-Type: application/json
 
 {
-  "name": "Iphone 16 pro max",
-  "description": "Very expensive phone",
-  "price": 2200,
-  "stock": 100,
-  "images": "https://www.optus.com.au/content/dam/optus/cloud/images/shop/mobile/phones/apple/iphone-17-pro-max/carousel/sd-01-iphone-17-promax-cosmicorange-frontback.version-1757460579643.jpg"
+  "name": "Samsung Galaxy S5",
+  "description": "Powerful phone of the past",
+  "price": 1100,
+  "stock": 20,
+  "category": "68c8f01555ede480a0121d5e",
+  "images": ["https://image-us.samsung.com/SamsungUS/pim/migration/mobile/phones/galaxy-s/sm-g900vzwavzw/Pdpkeyfeature-sm-g900vzwavzw-600x600-C1-062016.jpg?$product-details-jpg$"]
 }
 
 
