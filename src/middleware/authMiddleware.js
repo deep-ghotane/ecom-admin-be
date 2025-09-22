@@ -8,9 +8,9 @@ export const authMiddleware = async (req, res, next) => {
 
     let decoded = decodeAccessToken(accessToken);
     console.log("Return value", decoded);
-    let user = await findByFilter({ email });
+    let user = await findByFilter({ email: decoded.email });
 
-    if (user && user?.accessToken.includes(accessToken)) {
+    if (user) {
       user.password = "";
       req.user = user;
       next();
