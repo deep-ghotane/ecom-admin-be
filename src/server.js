@@ -25,7 +25,6 @@ app.use("/api/v1/auth", authRouter);
 // category router
 app.use("/api/v1/category", categoryRouter);
 
-app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/products", productRouter);
 
 //user routes
