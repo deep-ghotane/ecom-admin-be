@@ -3,10 +3,10 @@ import { decodeFunction, encodeFunction } from "../utils/encodeHelper.js";
 import { createAccessToken } from "../utils/jwt.js";
 
 export const createNewUser = async (req, res) => {
-  const { email, password } = req.body;
+  const { username, email, password } = req.body;
   const hashedPassword = encodeFunction(password);
   try {
-    const admin = await newAdmin({ email, password: hashedPassword });
+    const admin = await newAdmin({ email, username, password: hashedPassword });
     if (admin) {
       return res
         .status(200)
@@ -37,13 +37,11 @@ export const loginUser = async (req, res) => {
       let accessToken = createAccessToken(payload);
       console.log(111, accessToken);
       if (result) {
-        return res
-          .status(200)
-          .json({
-            status: "success",
-            message: "Login Successful",
-            accessToken,
-          });
+        return res.status(200).json({
+          status: "success",
+          message: "Login Successful",
+          accessToken,
+        });
       } else {
         return res
           .status(500)
