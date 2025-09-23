@@ -7,6 +7,7 @@ import {
 
 export const getAllProducts = async (req, res) => {
   try {
+    console.log(111, "hit");
     const products = await getAllProductsQuery();
     return res
       .status(200)
