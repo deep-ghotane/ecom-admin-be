@@ -7,7 +7,6 @@ import {
 
 export const getAllProducts = async (req, res) => {
   try {
-    console.log(111, "hit");
     const products = await getAllProductsQuery();
     return res
       .status(200)
@@ -21,7 +20,6 @@ export const addNewProduct = async (req, res) => {
   const payload = req.body;
   try {
     const product = await addProduct(payload);
-    console.log(product);
 
     if (!product) {
       return res
