@@ -18,12 +18,12 @@ export const getAllProducts = async (req, res) => {
 
 export const addNewProduct = async (req, res) => {
   const payload = req.body;
-  console.log(111);
-  const result = req.files;
-  console.log(222, result);
-  return;
+  const imageFiles = req.files;
+  const images = imageFiles.map(
+    (file) => "/public/assets/productImages/" + file.filename
+  );
   try {
-    const product = await addProduct(payload);
+    const product = await addProduct({ ...payload, images });
 
     if (!product) {
       return res

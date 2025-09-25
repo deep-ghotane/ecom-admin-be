@@ -19,6 +19,8 @@ app.get("/", (req, res) => {
   res.send("I am alive");
 });
 
+app.use("/public", express.static("assets/productImages"));
+
 // auth router
 
 app.use("/api/v1/auth", authRouter);
