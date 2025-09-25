@@ -18,6 +18,10 @@ export const getAllProducts = async (req, res) => {
 
 export const addNewProduct = async (req, res) => {
   const payload = req.body;
+  console.log(111);
+  const result = req.files;
+  console.log(222, result);
+  return;
   try {
     const product = await addProduct(payload);
 
