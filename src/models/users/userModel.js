@@ -4,6 +4,9 @@ export const newAdmin = (userObject) => {
   return User.insertOne(userObject);
 };
 
+export const getAllUsers = () => {
+  return User.find();
+};
 export const findById = (userId) => {
   return User.findById(userId);
 };
