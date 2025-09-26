@@ -9,6 +9,6 @@ const router = express.Router();
 
 router.get("/", authMiddleware, getAllUsersController);
 
-router.get("/detail", authMiddleware, getUserDetail);
+router.get("/setting", authMiddleware, getUserDetail);
 
 export default router;
