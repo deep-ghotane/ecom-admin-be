@@ -3,7 +3,7 @@ import Joi from "joi";
 const joiValidator = (schema, req, res, next) => {
   const { error } = schema.validate(req.body);
   error
-    ? res.json({
+    ? res.status(404).json({
         status: "error",
         message: error.message,
       })
