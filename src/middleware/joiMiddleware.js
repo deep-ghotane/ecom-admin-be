@@ -29,6 +29,17 @@ export const createUserValidation = (req, res, next) => {
   joiValidator(createUserSchema, req, res, next);
 };
 
+export const createUserByAdminValidation = (req, res, next) => {
+  let createUserByAdminSchema = Joi.object({
+    username: Joi.string().required(),
+    email: Joi.string().email().required(),
+    password: Joi.string().required(),
+    role: Joi.string().valid("admin", "superadmin").required(),
+  });
+
+  joiValidator(createUserByAdminSchema, req, res, next);
+};
+
 export const addProductValidation = (req, res, next) => {
   let createProductSchema = Joi.object({
     // name: Joi.string().required(),

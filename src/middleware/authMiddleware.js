@@ -1,5 +1,5 @@
 import { findByFilter } from "../models/users/userModel.js";
-import { decodeAccessToken } from "../utils/jwt.js";
+import { decodeAccessToken, decodeRefreshToken } from "../utils/jwt.js";
 
 export const authMiddleware = async (req, res, next) => {
   try {
@@ -34,9 +34,7 @@ export const refreshMiddleware = async (req, res, next) => {
     const refreshToken = req.headers.authorization;
     let decoded = decodeRefreshToken(refreshToken);
 
-    let user = await getUser({ email: decoded.email });
-
-    // console.log(user, refreshToken);
+    let user = await findByFilter({ email: decoded.email });
 
     if (user && user.refreshToken == refreshToken) {
       user.password = "";
@@ -60,6 +58,17 @@ export const refreshMiddleware = async (req, res, next) => {
 
 export const isAdmin = async (req, res, next) => {
   if (req.user.role == "admin" || req.user.role == "superadmin") {
+    next();
+  } else {
+    return res.json({
+      status: "error",
+      message: "User not authorized!",
+    });
+  }
+};
+
+export const isSuperAdmin = async (req, res, next) => {
+  if (req.user.role == "superadmin") {
     next();
   } else {
     return res.json({
