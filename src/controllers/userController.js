@@ -1,4 +1,4 @@
-import { getAllUsers } from "../models/users/userModel.js";
+import { getAllUsers, updateById } from "../models/users/userModel.js";
 
 export const getUserDetail = (req, res) => {
   res.send({
@@ -23,3 +23,22 @@ export const getAllUsersController = async (req, res) => {
     });
   }
 };
+
+export const updateUserProfile = async (req, res) => {
+  try {
+    const userId = req.user?._id;
+    const update = req.body;
+
+    const updatedUser = await updateById(userId, update, { new: true });
+    return res.json({
+      status: "success",
+      message: "User profile updated successfully",
+      user: updatedUser,
+    });
+  } catch (error) {
+    return res.json({
+      status: "error",
+      message: "Failed to update user profile" || error.message,
+    });
+  }
+}
