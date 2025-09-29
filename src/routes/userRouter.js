@@ -1,10 +1,15 @@
 import express from "express";
-import { authMiddleware, isAdmin } from "../middleware/authMiddleware.js";
+import {
+  authMiddleware,
+  isAdmin,
+  isSuperAdmin,
+} from "../middleware/authMiddleware.js";
 import {
   getAllUsersController,
   getUserDetail,
   registerUserController,
 } from "../controllers/userController.js";
+import { createUserByAdminValidation } from "../middleware/joiMiddleware.js";
 
 const router = express.Router();
 
@@ -12,6 +17,12 @@ router.get("/", authMiddleware, isAdmin, getAllUsersController);
 
 router.get("/setting", authMiddleware, getUserDetail);
 
-router.post("/setting", authMiddleware, registerUserController);
+router.post(
+  "/setting",
+  authMiddleware,
+  isSuperAdmin,
+  createUserByAdminValidation,
+  registerUserController
+);
 
 export default router;

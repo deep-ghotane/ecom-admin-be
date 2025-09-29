@@ -1,4 +1,8 @@
-import { getAllUsers } from "../models/users/userModel.js";
+import {
+  findByFilter,
+  getAllUsers,
+  newAdmin,
+} from "../models/users/userModel.js";
 
 export const getUserDetail = (req, res) => {
   res.send({
@@ -29,26 +33,45 @@ export const registerUserController = async (req, res) => {
     const { username, email, password, role } = req.body;
 
     // basic validation
-    if (!username || !email || !password) {
+    if (!username || !email || !password || !role) {
       return res
         .status(400)
         .json({ status: "error", message: "All fields required" });
     }
 
-    // check existing
-    const existing = await user.findOne({ email });
-    if (existing) {
+    // check existing username
+    const existingUsername = await findByFilter({ username });
+    if (existingUsername) {
+      return res
+        .status(400)
+        .json({ status: "error", message: "Username already exists" });
+    }
+    // check existing email
+    const existingEmail = await findByFilter({ email });
+    if (existingEmail) {
       return res
         .status(400)
         .json({ status: "error", message: "Email already exists" });
     }
 
     // create user
-    const user = await User.create({ username, email, password, role });
+    const user = await newAdmin({ username, email, password, role });
 
-    res.json({ status: "success", user });
+    res.json({
+      status: "success",
+      message: "New user created successfully",
+      user,
+    });
   } catch (error) {
-    console.error("registerUserController error:", error);
+    if (error.code === 11000) {
+      const duplicateField = Object.keys(error.keyValue)[0];
+      return res.status(400).json({
+        status: "error",
+        message: `${
+          duplicateField.charAt(0).toUpperCase() + duplicateField.slice(1)
+        } already exists`,
+      });
+    }
     res.status(500).json({ status: "error", message: error.message });
   }
 };
