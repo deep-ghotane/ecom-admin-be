@@ -1,5 +1,5 @@
 import express from "express";
-import { authMiddleware } from "../middleware/authMiddleware.js";
+import { authMiddleware, isAdmin } from "../middleware/authMiddleware.js";
 import {
   getAllUsersController,
   getUserDetail,
@@ -8,7 +8,7 @@ import {
 
 const router = express.Router();
 
-router.get("/", authMiddleware, getAllUsersController);
+router.get("/", authMiddleware, isAdmin, getAllUsersController);
 
 router.get("/setting", authMiddleware, getUserDetail);
 

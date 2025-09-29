@@ -29,42 +29,42 @@ export const authMiddleware = async (req, res, next) => {
   }
 };
 
-// export const refreshMiddleware = async (req, res, next) => {
-//   try {
-//     const refreshToken = req.headers.authorization;
-//     let decoded = decodeRefreshToken(refreshToken);
+export const refreshMiddleware = async (req, res, next) => {
+  try {
+    const refreshToken = req.headers.authorization;
+    let decoded = decodeRefreshToken(refreshToken);
 
-//     let user = await getUser({ email: decoded.email });
+    let user = await getUser({ email: decoded.email });
 
-//     // console.log(user, refreshToken);
+    // console.log(user, refreshToken);
 
-//     if (user && user.refreshToken == refreshToken) {
-//       user.password = "";
-//       req.user = user;
-//       next();
-//     } else {
-//       res.status(401).json({ message: "Unauthorised" });
-//     }
-//   } catch (err) {
-//     console.log(err.message);
-//     let errorMessage = err.message.includes("jwt expire")
-//       ? err.message
-//       : "Server Error";
+    if (user && user.refreshToken == refreshToken) {
+      user.password = "";
+      req.user = user;
+      next();
+    } else {
+      res.status(401).json({ message: "Unauthorised" });
+    }
+  } catch (err) {
+    console.log(err.message);
+    let errorMessage = err.message.includes("jwt expire")
+      ? err.message
+      : "Server Error";
 
-//     let statusCode = err.message.includes("jwt expire") ? 401 : 500;
-//     return res
-//       .status(statusCode)
-//       .json({ message: errorMessage, status: "error" });
-//   }
-// };
+    let statusCode = err.message.includes("jwt expire") ? 401 : 500;
+    return res
+      .status(statusCode)
+      .json({ message: errorMessage, status: "error" });
+  }
+};
 
-// export const isAdmin = async (req, res, next) => {
-//   if (req.user.role == "admin") {
-//     next();
-//   } else {
-//     return res.json({
-//       status: "error",
-//       message: "User not authorized!",
-//     });
-//   }
-// };
+export const isAdmin = async (req, res, next) => {
+  if (req.user.role == "admin" || req.user.role == "superadmin") {
+    next();
+  } else {
+    return res.json({
+      status: "error",
+      message: "User not authorized!",
+    });
+  }
+};
