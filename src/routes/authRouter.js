@@ -4,11 +4,12 @@ import {
   createUserValidation,
   loginValidation,
 } from "../middleware/joiMiddleware.js";
+import { authMiddleware, isAdmin } from "../middleware/authMiddleware.js";
 // import { authMiddleware } from "../middleware/authMiddleware.js";
 
 const router = express.Router();
 
-router.post("/", createUserValidation, createNewUser);
+router.post("/", authMiddleware, isAdmin, createUserValidation, createNewUser);
 router.post("/login", loginValidation, loginUser);
 
 export default router;

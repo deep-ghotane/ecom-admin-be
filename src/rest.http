@@ -24,6 +24,7 @@ Content-Type: application/json
 ###
 POST {{apiURL}}/category
 Content-Type: application/json
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3RlckBnbWFpbC5jb20iLCJpYXQiOjE3NTkxMjcyMzQsImV4cCI6MTc1OTIxMzYzNH0.zr2gygPQ_5iIFSPq4Hy9vvLvy0UM7_1EBtkl-vxKxyA
 
 {
   "name":"Laptop"
