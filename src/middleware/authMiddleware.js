@@ -1,5 +1,4 @@
-import { findByFilter } from "../models/users/UserModel.js";
-// import { decodeAccessToken, decodeRefreshToken } from "../utils/jwt.js";
+import { findByFilter } from "../models/users/userModel.js";
 import { decodeAccessToken } from "../utils/jwt.js";
 
 export const authMiddleware = async (req, res, next) => {
