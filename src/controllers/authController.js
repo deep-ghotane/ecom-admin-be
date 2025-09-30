@@ -50,6 +50,11 @@ export const loginUser = async (req, res) => {
           .status(500)
           .json({ status: "error", message: "Invalid credentials" });
       }
+    } else {
+      return res.json({
+        status: "error",
+        message: "User Not found",
+      });
     }
   } catch (error) {
     return res
