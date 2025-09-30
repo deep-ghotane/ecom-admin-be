@@ -29,15 +29,11 @@ export const loginUser = async (req, res) => {
     const user = await findByFilter({ email });
     if (user) {
       const result = decodeFunction(password, user.password);
-
       let payload = {
         email: user.email,
       };
-
       let accessToken = createAccessToken(payload);
       let refreshToken = createRefreshToken(payload);
-
-      console.log(111, accessToken);
       if (result) {
         return res.status(200).json({
           status: "success",
