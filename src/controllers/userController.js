@@ -89,14 +89,20 @@ export const updateUserProfile = async (req, res) => {
     const userId = req.user?._id;
     const update = req.body;
 
-    const updatedUser = await updateById(userId, update, { new: true });
+    if (!userId) {
+      return res.status(401).json({
+        status: "error",
+        message: "Unauthorized"
+      });
+    }
+    const updatedUser = await updateById(userId, update, { new: true, runValidators: true });
     return res.json({
       status: "success",
       message: "User profile updated successfully",
       user: updatedUser,
     });
   } catch (error) {
-    return res.json({
+    return res.status(500).json({
       status: "error",
       message: "Failed to update user profile" || error.message,
     });
