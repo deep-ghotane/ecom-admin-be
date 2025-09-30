@@ -1,6 +1,6 @@
 import { findByFilter, newAdmin } from "../models/users/userModel.js";
 import { decodeFunction, encodeFunction } from "../utils/encodeHelper.js";
-import { createAccessToken } from "../utils/jwt.js";
+import { createAccessToken, createRefreshToken } from "../utils/jwt.js";
 
 export const createNewUser = async (req, res) => {
   const { username, email, password } = req.body;
@@ -35,12 +35,15 @@ export const loginUser = async (req, res) => {
       };
 
       let accessToken = createAccessToken(payload);
+      let refreshToken = createRefreshToken(payload);
+
       console.log(111, accessToken);
       if (result) {
         return res.status(200).json({
           status: "success",
           message: "Login Successful",
           accessToken,
+          refreshToken,
         });
       } else {
         return res
