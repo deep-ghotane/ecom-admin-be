@@ -1,11 +1,10 @@
-import { getAllUsers, updateById } from "../models/users/userModel.js";
 import {
   findByFilter,
   getAllUsers,
   newAdmin,
+  updateById,
 } from "../models/users/userModel.js";
 import { encodeFunction } from "../utils/encodeHelper.js";
-
 
 export const getUserDetail = (req, res) => {
   res.send({
@@ -102,5 +101,4 @@ export const updateUserProfile = async (req, res) => {
       message: "Failed to update user profile" || error.message,
     });
   }
-}
-
+};
