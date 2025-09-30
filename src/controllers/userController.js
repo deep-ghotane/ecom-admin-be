@@ -3,6 +3,7 @@ import {
   getAllUsers,
   newAdmin,
 } from "../models/users/userModel.js";
+import { encodeFunction } from "../utils/encodeHelper.js";
 
 export const getUserDetail = (req, res) => {
   res.send({
@@ -31,6 +32,7 @@ export const getAllUsersController = async (req, res) => {
 export const registerUserController = async (req, res) => {
   try {
     const { username, email, password, role } = req.body;
+    const hashedPassword = encodeFunction(password);
 
     // basic validation
     if (!username || !email || !password || !role) {
@@ -55,7 +57,12 @@ export const registerUserController = async (req, res) => {
     }
 
     // create user
-    const user = await newAdmin({ username, email, password, role });
+    const user = await newAdmin({
+      username,
+      email,
+      password: hashedPassword,
+      role,
+    });
 
     res.json({
       status: "success",
