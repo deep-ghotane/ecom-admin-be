@@ -3,7 +3,7 @@ import config from "../config/config.js";
 
 export const createAccessToken = (payload) => {
   return jwt.sign(payload, config.jwt.secret, {
-    expiresIn: config.jwt.expiresin,
+    expiresIn: config.jwt.expiresIn,
   });
 };
 
