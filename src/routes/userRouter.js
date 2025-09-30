@@ -7,7 +7,8 @@ import {
 import {
   getAllUsersController,
   getUserDetail,
-  registerUserController,
+ registerUserController,
+  updateUserProfile,
 } from "../controllers/userController.js";
 import { createUserByAdminValidation } from "../middleware/joiMiddleware.js";
 
@@ -24,5 +25,7 @@ router.post(
   createUserByAdminValidation,
   registerUserController
 );
+
+router.put("/setting", authMiddleware, updateUserProfile);
 
 export default router;

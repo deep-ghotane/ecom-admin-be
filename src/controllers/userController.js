@@ -1,9 +1,11 @@
+import { getAllUsers, updateById } from "../models/users/userModel.js";
 import {
   findByFilter,
   getAllUsers,
   newAdmin,
 } from "../models/users/userModel.js";
 import { encodeFunction } from "../utils/encodeHelper.js";
+
 
 export const getUserDetail = (req, res) => {
   res.send({
@@ -82,3 +84,23 @@ export const registerUserController = async (req, res) => {
     res.status(500).json({ status: "error", message: error.message });
   }
 };
+
+export const updateUserProfile = async (req, res) => {
+  try {
+    const userId = req.user?._id;
+    const update = req.body;
+
+    const updatedUser = await updateById(userId, update, { new: true });
+    return res.json({
+      status: "success",
+      message: "User profile updated successfully",
+      user: updatedUser,
+    });
+  } catch (error) {
+    return res.json({
+      status: "error",
+      message: "Failed to update user profile" || error.message,
+    });
+  }
+}
+
