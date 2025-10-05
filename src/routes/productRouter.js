@@ -22,7 +22,6 @@ router.post(
   isAdmin,
   upload.array("images", 5),
   addProductValidation,
-
   addNewProduct
 );
 router.patch(

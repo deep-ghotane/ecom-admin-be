@@ -4,6 +4,7 @@ import { decodeAccessToken, decodeRefreshToken } from "../utils/jwt.js";
 export const authMiddleware = async (req, res, next) => {
   try {
     const accessToken = req.headers.authorization;
+    console.log(222, accessToken);
 
     let decoded = decodeAccessToken(accessToken);
     console.log("Return value", decoded);
