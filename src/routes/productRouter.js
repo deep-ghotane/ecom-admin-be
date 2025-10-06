@@ -25,7 +25,8 @@ router.post(
   addNewProduct
 );
 router.patch(
-  "/",
+  "/:id",
+  upload.array("images", 5),
   authMiddleware,
   isAdmin,
   updateProductValidation,

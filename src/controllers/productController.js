@@ -64,8 +64,10 @@ export const addNewProduct = async (req, res) => {
 
 export const updateProduct = async (req, res) => {
   try {
-    const { id, ...rest } = req.body;
-    const product = await updateProductQuery(id, rest);
+    const { id } = req.params;
+    const payload = req.body;
+    console.log(111, payload);
+    const product = await updateProductQuery(id, payload);
     return res
       .status(200)
       .json({ status: "success", message: "Product updated" });
