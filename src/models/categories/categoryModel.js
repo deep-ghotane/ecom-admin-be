@@ -13,3 +13,7 @@ export const insertCategory = (categoryObj) => {
 export const deleteCategoryQuery = (id) => {
   return Category.findByIdAndDelete(id);
 };
+
+export const updateCategoryQuery = (id, payload) => {
+  return Category.findByIdAndUpdate(id, payload);
+};

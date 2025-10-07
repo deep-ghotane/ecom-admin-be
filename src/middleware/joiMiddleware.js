@@ -87,3 +87,11 @@ export const createCategoryValidation = (req, res, next) => {
 
   joiValidator(createCategorySchema, req, res, next);
 };
+
+export const updateCategoryValidation = (req, res, next) => {
+  let updateCategorySchema = Joi.object({
+    name: Joi.string().required(),
+  });
+
+  joiValidator(updateCategorySchema, req, res, next);
+};
