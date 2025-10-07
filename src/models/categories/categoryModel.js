@@ -9,3 +9,7 @@ export const getAllCategories = () => {
 export const insertCategory = (categoryObj) => {
   return Category.create(categoryObj);
 };
+
+export const deleteCategoryQuery = (id) => {
+  return Category.findByIdAndDelete(id);
+};

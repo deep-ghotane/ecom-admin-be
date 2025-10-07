@@ -1,4 +1,5 @@
 import {
+  deleteCategoryQuery,
   getAllCategories,
   insertCategory,
 } from "../models/categories/categoryModel.js";
@@ -36,6 +37,22 @@ export const createCategory = async (req, res, next) => {
       status: "error",
       message: "Failed creating category",
       error: err.message,
+    });
+  }
+};
+
+export const deleteCategory = async (req, res, next) => {
+  try {
+    const { id } = req.body;
+    const result = await deleteCategoryQuery(id);
+    return res.json({
+      status: "success",
+      message: "Category deleted successfully",
+    });
+  } catch (err) {
+    res.json({
+      status: "error",
+      message: "Failed deleting category",
     });
   }
 };
