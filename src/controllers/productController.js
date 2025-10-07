@@ -5,7 +5,6 @@ import {
   updateProductQuery,
 } from "../models/products/productModel.js";
 import cloudinary from "../config/cloudinaryConfig.js";
-import { upload } from "../middleware/multerconfig.js";
 
 export const getAllProducts = async (req, res) => {
   try {
@@ -35,7 +34,6 @@ export const addNewProduct = async (req, res) => {
       });
 
       const results = await Promise.all(uploadPromises);
-      console.log(111, results);
       return results;
     } catch (error) {
       console.log("Erroruploading images", error);
@@ -66,8 +64,10 @@ export const addNewProduct = async (req, res) => {
 
 export const updateProduct = async (req, res) => {
   try {
-    const { id, ...rest } = req.body;
-    const product = await updateProductQuery(id, rest);
+    const { id } = req.params;
+    const payload = req.body;
+    console.log(111, payload);
+    const product = await updateProductQuery(id, payload);
     return res
       .status(200)
       .json({ status: "success", message: "Product updated" });
