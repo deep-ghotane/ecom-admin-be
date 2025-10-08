@@ -20,6 +20,7 @@ export const getAllProducts = async (req, res) => {
 export const addNewProduct = async (req, res) => {
   const payload = req.body;
   const imageFiles = req.files;
+  const categories = JSON.parse(req.body.category);
   const uploadImages = async (files) => {
     try {
       console.log("starting image uploads");
