@@ -66,7 +66,6 @@ export const updateProduct = async (req, res) => {
   try {
     const { id } = req.params;
     const payload = req.body;
-    console.log(111, payload);
     const product = await updateProductQuery(id, payload);
     return res
       .status(200)
