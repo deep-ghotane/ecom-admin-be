@@ -41,15 +41,16 @@ export const createUserByAdminValidation = (req, res, next) => {
 };
 
 export const addProductValidation = (req, res, next) => {
-  let createProductSchema = Joi.object({
+  console.log(222, req.body);
+  let addProductSchema = Joi.object({
     name: Joi.string().required(),
     description: Joi.string().required(),
     price: Joi.number().required(),
     stock: Joi.number().required(),
-    category: Joi.string(),
+    category: Joi.array().items(Joi.string().required()).min(1).required(),
   });
 
-  joiValidator(createProductSchema, req, res, next);
+  joiValidator(addProductSchema, req, res, next);
 };
 
 export const updateProductValidation = (req, res, next) => {
