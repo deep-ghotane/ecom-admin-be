@@ -20,6 +20,11 @@ const productSchema = new mongoose.Schema(
       required: true,
       min: 0,
     },
+    // status: {
+    //   type: Boolean,
+    //   enum: ["active", "inactive"],
+    //   default: "inactive",
+    // },
     category: [
       {
         type: mongoose.Schema.Types.ObjectId,
