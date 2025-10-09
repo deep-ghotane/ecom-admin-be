@@ -5,6 +5,8 @@ import {
   updateProductQuery,
 } from "../models/products/productModel.js";
 import cloudinary from "../config/cloudinaryConfig.js";
+import { findByFilter } from "../models/users/userModel.js";
+import { findByFilterandGetSomething } from "../models/categories/categoryModel.js";
 
 export const getAllProducts = async (req, res) => {
   try {
@@ -18,14 +20,15 @@ export const getAllProducts = async (req, res) => {
 };
 
 export const addNewProduct = async (req, res) => {
-  const payload = req.body;
+  const { category, ...payload } = req.body;
+  const categoriesId = await findByFilterandGetSomething(
+    { name: { $in: category } },
+    "_id"
+  );
   const imageFiles = req.files;
-  const categories = JSON.parse(req.body.category);
   const uploadImages = async (files) => {
     try {
-      console.log("starting image uploads");
       const uploadPromises = files.map((file) => {
-        console.log("uploading", file.path);
         return cloudinary.uploader.upload(file.path, {
           folder: "products",
           use_filename: true,
@@ -44,11 +47,13 @@ export const addNewProduct = async (req, res) => {
 
   try {
     const cloudinaryResult = await uploadImages(imageFiles);
-    console.log(cloudinaryResult);
     const images = cloudinaryResult.map((res) => res.secure_url);
-    console.log(images);
 
-    const product = await addProduct({ ...payload, images });
+    const product = await addProduct({
+      ...payload,
+      images,
+      cateogry: categoriesId,
+    });
 
     if (!product) {
       return res

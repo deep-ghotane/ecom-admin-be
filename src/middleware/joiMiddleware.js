@@ -41,7 +41,6 @@ export const createUserByAdminValidation = (req, res, next) => {
 };
 
 export const addProductValidation = (req, res, next) => {
-  console.log(222, req.body);
   let addProductSchema = Joi.object({
     name: Joi.string().required(),
     description: Joi.string().required(),
