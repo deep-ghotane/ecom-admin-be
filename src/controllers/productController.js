@@ -25,6 +25,7 @@ export const addNewProduct = async (req, res) => {
     { name: { $in: category } },
     "_id"
   );
+  const categoriesIdArray = categoriesId.map((idObj) => idObj._id);
   const imageFiles = req.files;
   const uploadImages = async (files) => {
     try {
@@ -52,7 +53,7 @@ export const addNewProduct = async (req, res) => {
     const product = await addProduct({
       ...payload,
       images,
-      cateogry: categoriesId,
+      category: categoriesIdArray,
     });
 
     if (!product) {
