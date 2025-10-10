@@ -48,7 +48,6 @@ export const addProductValidation = (req, res, next) => {
   }
 
   req.body.category = category;
-  console.log(222333, category);
   let addProductSchema = Joi.object({
     name: Joi.string().required(),
     description: Joi.string().required(),
@@ -99,6 +98,7 @@ export const changeProductStatusValidation = (req, res, next) => {
 export const createCategoryValidation = (req, res, next) => {
   let createCategorySchema = Joi.object({
     name: Joi.string().required(),
+    parent: Joi.string().required(),
   });
 
   joiValidator(createCategorySchema, req, res, next);

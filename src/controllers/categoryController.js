@@ -25,6 +25,7 @@ export const fetchAllCategories = async (req, res, next) => {
 export const createCategory = async (req, res, next) => {
   try {
     let categoryObj = req.body;
+    console.log(111, categoryObj);
     let addCategory = await insertCategory(categoryObj);
 
     return res.json({
