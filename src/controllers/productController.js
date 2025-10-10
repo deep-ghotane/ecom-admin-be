@@ -6,8 +6,8 @@ import {
   updateProductQuery,
 } from "../models/products/productModel.js";
 import cloudinary from "../config/cloudinaryConfig.js";
-import { findByFilter } from "../models/users/userModel.js";
 import { findByFilterandGetSomething } from "../models/categories/categoryModel.js";
+import { slugifyItem } from "../utils/slugify.js";
 
 export const getAllProducts = async (req, res) => {
   try {
@@ -22,6 +22,7 @@ export const getAllProducts = async (req, res) => {
 
 export const addNewProduct = async (req, res) => {
   const { category, ...payload } = req.body;
+  const slug = slugifyItem(payload.name);
   const categoriesId = await findByFilterandGetSomething(
     { name: { $in: category } },
     "_id"
@@ -55,6 +56,7 @@ export const addNewProduct = async (req, res) => {
       ...payload,
       images,
       category: categoriesIdArray,
+      slug,
     });
 
     if (!product) {
