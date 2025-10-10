@@ -2,6 +2,7 @@ import {
   addProduct,
   deleteProductQuery,
   getAllProductsQuery,
+  getProductsById,
   updateProductQuery,
 } from "../models/products/productModel.js";
 import cloudinary from "../config/cloudinaryConfig.js";
@@ -89,6 +90,32 @@ export const deleteProduct = async (req, res) => {
     return res
       .status(200)
       .json({ status: "success", message: "Product deleted" });
+  } catch (error) {
+    res.status(500).json({ status: "error", message: "Internal server error" });
+  }
+};
+
+export const changeProductStatus = async (req, res) => {
+  try {
+    const { id } = req.body;
+    const product = await getProductsById(id);
+    if (!product) {
+      return res
+        .status(404)
+        .json({ status: "error", message: "Product not found" });
+    }
+    let status = product.status;
+    if (status === "active") {
+      status = "inactive";
+    } else {
+      status = "active";
+    }
+    const result = await updateProductQuery(id, {
+      status: status,
+    });
+    return res
+      .status(200)
+      .json({ status: "success", message: "Product status changed" });
   } catch (error) {
     res.status(500).json({ status: "error", message: "Internal server error" });
   }

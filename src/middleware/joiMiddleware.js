@@ -88,6 +88,14 @@ export const deleteCategoryValidation = (req, res, next) => {
   joiValidator(deleteCategorySchema, req, res, next);
 };
 
+export const changeProductStatusValidation = (req, res, next) => {
+  let changeProductStatusSchema = Joi.object({
+    id: Joi.string().required(),
+  });
+
+  joiValidator(changeProductStatusSchema, req, res, next);
+};
+
 export const createCategoryValidation = (req, res, next) => {
   let createCategorySchema = Joi.object({
     name: Joi.string().required(),
