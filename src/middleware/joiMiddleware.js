@@ -98,7 +98,7 @@ export const changeProductStatusValidation = (req, res, next) => {
 export const createCategoryValidation = (req, res, next) => {
   let createCategorySchema = Joi.object({
     name: Joi.string().required(),
-    parent: Joi.string().required(),
+    parent: Joi.alternatives().try(Joi.string(), Joi.valid(null)),
   });
 
   joiValidator(createCategorySchema, req, res, next);
