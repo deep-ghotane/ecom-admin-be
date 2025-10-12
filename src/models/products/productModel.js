@@ -8,6 +8,10 @@ export const getAllProductsQuery = () => {
   return Product.find();
 };
 
+export const getProductsById = (id) => {
+  return Product.findById(id);
+};
+
 export const updateProductQuery = (id, updateObj) => {
   return Product.findByIdAndUpdate(id, updateObj);
 };

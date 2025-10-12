@@ -1,5 +1,6 @@
 import {
   deleteCategoryQuery,
+  findByFilter,
   getAllCategories,
   insertCategory,
   updateCategoryQuery,
@@ -7,12 +8,20 @@ import {
 
 export const fetchAllCategories = async (req, res, next) => {
   try {
-    let categories = await getAllCategories();
+    let allCategories = await findByFilter();
+
+    const categories = allCategories.filter(
+      (category) => category.parent === null
+    );
+    const subCategories = allCategories.filter(
+      (category) => category.parent !== null
+    );
 
     return res.json({
       status: "success",
       message: "All categories fetched successfully",
       categories,
+      subCategories,
     });
   } catch (err) {
     res.json({
@@ -25,6 +34,10 @@ export const fetchAllCategories = async (req, res, next) => {
 export const createCategory = async (req, res, next) => {
   try {
     let categoryObj = req.body;
+    if (categoryObj.parent === "null" || categoryObj.parent === "") {
+      categoryObj.parent = null;
+    }
+    console.log(222, categoryObj);
     let addCategory = await insertCategory(categoryObj);
 
     return res.json({

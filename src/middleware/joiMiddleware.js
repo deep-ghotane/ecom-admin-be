@@ -41,7 +41,13 @@ export const createUserByAdminValidation = (req, res, next) => {
 };
 
 export const addProductValidation = (req, res, next) => {
-  console.log(222, req.body);
+  //convert category string to category array if only 1 item was sent
+  let { category } = req.body;
+  if (!Array.isArray(category)) {
+    category = [category];
+  }
+
+  req.body.category = category;
   let addProductSchema = Joi.object({
     name: Joi.string().required(),
     description: Joi.string().required(),
@@ -81,9 +87,18 @@ export const deleteCategoryValidation = (req, res, next) => {
   joiValidator(deleteCategorySchema, req, res, next);
 };
 
+export const changeProductStatusValidation = (req, res, next) => {
+  let changeProductStatusSchema = Joi.object({
+    id: Joi.string().required(),
+  });
+
+  joiValidator(changeProductStatusSchema, req, res, next);
+};
+
 export const createCategoryValidation = (req, res, next) => {
   let createCategorySchema = Joi.object({
     name: Joi.string().required(),
+    parent: Joi.alternatives().try(Joi.string(), Joi.valid(null)),
   });
 
   joiValidator(createCategorySchema, req, res, next);

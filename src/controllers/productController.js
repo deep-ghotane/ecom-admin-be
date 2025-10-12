@@ -2,9 +2,12 @@ import {
   addProduct,
   deleteProductQuery,
   getAllProductsQuery,
+  getProductsById,
   updateProductQuery,
 } from "../models/products/productModel.js";
 import cloudinary from "../config/cloudinaryConfig.js";
+import { findByFilterandGetSomething } from "../models/categories/categoryModel.js";
+import { slugifyItem } from "../utils/slugify.js";
 
 export const getAllProducts = async (req, res) => {
   try {
@@ -18,14 +21,17 @@ export const getAllProducts = async (req, res) => {
 };
 
 export const addNewProduct = async (req, res) => {
-  const payload = req.body;
+  const { category, ...payload } = req.body;
+  const slug = slugifyItem(payload.name);
+  const categoriesId = await findByFilterandGetSomething(
+    { name: { $in: category } },
+    "_id"
+  );
+  const categoriesIdArray = categoriesId.map((idObj) => idObj._id);
   const imageFiles = req.files;
-  const categories = JSON.parse(req.body.category);
   const uploadImages = async (files) => {
     try {
-      console.log("starting image uploads");
       const uploadPromises = files.map((file) => {
-        console.log("uploading", file.path);
         return cloudinary.uploader.upload(file.path, {
           folder: "products",
           use_filename: true,
@@ -44,11 +50,14 @@ export const addNewProduct = async (req, res) => {
 
   try {
     const cloudinaryResult = await uploadImages(imageFiles);
-    console.log(cloudinaryResult);
     const images = cloudinaryResult.map((res) => res.secure_url);
-    console.log(images);
 
-    const product = await addProduct({ ...payload, images });
+    const product = await addProduct({
+      ...payload,
+      images,
+      category: categoriesIdArray,
+      slug,
+    });
 
     if (!product) {
       return res
@@ -83,6 +92,32 @@ export const deleteProduct = async (req, res) => {
     return res
       .status(200)
       .json({ status: "success", message: "Product deleted" });
+  } catch (error) {
+    res.status(500).json({ status: "error", message: "Internal server error" });
+  }
+};
+
+export const changeProductStatus = async (req, res) => {
+  try {
+    const { id } = req.body;
+    const product = await getProductsById(id);
+    if (!product) {
+      return res
+        .status(404)
+        .json({ status: "error", message: "Product not found" });
+    }
+    let status = product.status;
+    if (status === "active") {
+      status = "inactive";
+    } else {
+      status = "active";
+    }
+    const result = await updateProductQuery(id, {
+      status: status,
+    });
+    return res
+      .status(200)
+      .json({ status: "success", message: "Product status changed" });
   } catch (error) {
     res.status(500).json({ status: "error", message: "Internal server error" });
   }

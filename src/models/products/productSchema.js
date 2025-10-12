@@ -5,6 +5,12 @@ const productSchema = new mongoose.Schema(
     name: {
       type: String,
       required: true,
+      unique: true,
+    },
+    slug: {
+      type: String,
+      required: true,
+      unique: true,
     },
     description: {
       type: String,
@@ -19,6 +25,11 @@ const productSchema = new mongoose.Schema(
       type: Number,
       required: true,
       min: 0,
+    },
+    status: {
+      type: String,
+      enum: ["active", "inactive"],
+      default: "inactive",
     },
     category: [
       {

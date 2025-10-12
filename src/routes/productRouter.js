@@ -1,12 +1,14 @@
 import express from "express";
 import {
   addNewProduct,
+  changeProductStatus,
   deleteProduct,
   getAllProducts,
   updateProduct,
 } from "../controllers/productController.js";
 import {
   addProductValidation,
+  changeProductStatusValidation,
   deleteProductValidation,
   updateProductValidation,
 } from "../middleware/joiMiddleware.js";
@@ -39,4 +41,13 @@ router.delete(
   deleteProductValidation,
   deleteProduct
 );
+
+router.post(
+  "/status",
+  authMiddleware,
+  isAdmin,
+  changeProductStatusValidation,
+  changeProductStatus
+);
+
 export default router;
