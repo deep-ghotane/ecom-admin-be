@@ -1,10 +1,11 @@
+import slugify from "slugify";
 import {
   deleteCategoryQuery,
   findByFilter,
-  getAllCategories,
   insertCategory,
   updateCategoryQuery,
 } from "../models/categories/categoryModel.js";
+import { slugifyItem } from "../utils/slugify.js";
 
 export const fetchAllCategories = async (req, res, next) => {
   try {
@@ -34,10 +35,12 @@ export const fetchAllCategories = async (req, res, next) => {
 export const createCategory = async (req, res, next) => {
   try {
     let categoryObj = req.body;
+    let { name } = categoryObj;
+    let slug = slugifyItem(name);
     if (categoryObj.parent === "null" || categoryObj.parent === "") {
       categoryObj.parent = null;
     }
-    console.log(222, categoryObj);
+    categoryObj.slug = slug;
     let addCategory = await insertCategory(categoryObj);
 
     return res.json({
@@ -46,7 +49,7 @@ export const createCategory = async (req, res, next) => {
       data: addCategory,
     });
   } catch (err) {
-    res.json({
+    res.status(500).json({
       status: "error",
       message: "Failed creating category",
     });
