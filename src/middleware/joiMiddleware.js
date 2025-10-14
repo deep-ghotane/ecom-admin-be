@@ -60,12 +60,18 @@ export const addProductValidation = (req, res, next) => {
 };
 
 export const updateProductValidation = (req, res, next) => {
+  let { imagesToDelete } = req.body;
+  if (!Array.isArray(imagesToDelete)) {
+    imagesToDelete = imagesToDelete ? [imagesToDelete] : [];
+  }
+  req.body.imagesToDelete = imagesToDelete;
   let updateProductSchema = Joi.object({
     name: Joi.string(),
     description: Joi.string(),
     price: Joi.number(),
     stock: Joi.number(),
     category: Joi.string(),
+    imagesToDelete: Joi.array().items(Joi.string()),
   });
 
   joiValidator(updateProductSchema, req, res, next);
