@@ -5,6 +5,11 @@ export const getAllCategories = () => {
   return Category.find();
 };
 
+//find slug
+export const findBySlug = (filter) => {
+  return Category.findOne(filter);
+};
+
 export const findByFilter = (filter) => {
   return Category.find(filter);
 };
@@ -23,5 +28,5 @@ export const deleteCategoryQuery = (id) => {
 };
 
 export const updateCategoryQuery = (id, payload) => {
-  return Category.findByIdAndUpdate(id, payload);
+  return Category.findByIdAndUpdate(id, payload, { new: true });
 };

@@ -1,14 +1,14 @@
 import express from "express";
 import cors from "cors";
-import mongoConnect from "./config/mongoConfig.js";
-import config from "./config/config.js";
-import authRouter from "./routes/authRouter.js";
+import mongoConnect from "./src/config/mongoConfig.js";
+import config from "./src/config/config.js";
+import authRouter from "./src/routes/authRouter.js";
 
-import userRouter from "./routes/userRouter.js";
+import userRouter from "./src/routes/userRouter.js";
 
-import categoryRouter from "./routes/categoryRouter.js";
+import categoryRouter from "./src/routes/categoryRouter.js";
 
-import productRouter from "./routes/productRouter.js";
+import productRouter from "./src/routes/productRouter.js";
 
 const app = express();
 app.use(cors());
