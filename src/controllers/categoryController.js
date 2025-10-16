@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import mongoose from "mongoose";
 import {
   deleteCategoryQuery,
@@ -7,6 +8,16 @@ import {
   updateCategoryQuery,
 } from "../models/categories/categoryModel.js";
 import slugify from "slugify";
+=======
+import slugify from "slugify";
+import {
+  deleteCategoryQuery,
+  findByFilter,
+  insertCategory,
+  updateCategoryQuery,
+} from "../models/categories/categoryModel.js";
+import { slugifyItem } from "../utils/slugify.js";
+>>>>>>> 7c1443f1d81f88a48b8e50b8a593dc93a3e6281e
 
 export const fetchAllCategories = async (req, res, next) => {
   try {
@@ -35,6 +46,7 @@ export const fetchAllCategories = async (req, res, next) => {
 
 export const createCategory = async (req, res, next) => {
   try {
+<<<<<<< HEAD
     let categoryObj = { ...req.body };
 
     if (
@@ -58,6 +70,15 @@ export const createCategory = async (req, res, next) => {
 
     categoryObj.slug = baseSlug;
 
+=======
+    let categoryObj = req.body;
+    let { name } = categoryObj;
+    let slug = slugifyItem(name);
+    if (categoryObj.parent === "null" || categoryObj.parent === "") {
+      categoryObj.parent = null;
+    }
+    categoryObj.slug = slug;
+>>>>>>> 7c1443f1d81f88a48b8e50b8a593dc93a3e6281e
     let addCategory = await insertCategory(categoryObj);
 
     return res.json({
@@ -66,6 +87,7 @@ export const createCategory = async (req, res, next) => {
       data: addCategory,
     });
   } catch (err) {
+<<<<<<< HEAD
     console.error("Create category error:", err);
     if (err.code === 11000) {
       return res.json({
@@ -75,6 +97,9 @@ export const createCategory = async (req, res, next) => {
       });
     }
     res.json({
+=======
+    res.status(500).json({
+>>>>>>> 7c1443f1d81f88a48b8e50b8a593dc93a3e6281e
       status: "error",
       message: err.message || "Failed creating category",
     });
