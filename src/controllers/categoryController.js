@@ -76,7 +76,7 @@ export const createCategory = async (req, res, next) => {
     }
     res.json({
       status: "error",
-      message: err.message || "Failed creating category",
+      message: "Failed creating category",
     });
   }
 };
