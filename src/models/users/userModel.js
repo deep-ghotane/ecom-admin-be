@@ -16,7 +16,7 @@ export const findByFilter = (filterObj) => {
 };
 
 export const updateById = (userId, updateObj) => {
-  return User.findByIdAndUpdate(userId, updateObj);
+  return User.findByIdAndUpdate(userId, updateObj, { new: true });
 };
 
 export const deleteById = (userId) => {
