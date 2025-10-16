@@ -76,7 +76,7 @@ export const createCategory = async (req, res, next) => {
     }
     res.json({
       status: "error",
-      message: err.message || "Failed creating category",
+      message: "Failed creating category",
     });
   }
 };
@@ -137,7 +137,7 @@ export const updateCategory = async (req, res) => {
     console.error("Update category error:", err);
     return res.json({
       status: "error",
-      message: err.message || "Failed updating category",
+      message: "Failed updating category",
     });
   }
 };
