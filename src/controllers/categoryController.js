@@ -137,7 +137,7 @@ export const updateCategory = async (req, res) => {
     console.error("Update category error:", err);
     return res.json({
       status: "error",
-      message: err.message || "Failed updating category",
+      message: "Failed updating category",
     });
   }
 };
