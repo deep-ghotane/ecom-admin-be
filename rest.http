@@ -73,3 +73,24 @@ Content-Type: application/json
 {
   "id": "68cfbe279b2684f7f1118e28"
 }
+
+
+#####
+#### get orders
+GET {{apiURL}}/orders
+Content-Type: application/json
+Authorization:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3RlckBnbWFpbC5jb20iLCJpYXQiOjE3NjA3NzA4NDgsImV4cCI6MTc2MTM3NTY0OH0.9JPajznin-OvOdLhAuysI7ivBomIWWjEMKb0Wqf2SKs
+
+
+#### Update order status
+PATCH {{apiURL}}/orders
+Content-Type: application/json
+Authorization:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3RlckBnbWFpbC5jb20iLCJpYXQiOjE3NjA3NzA4NDgsImV4cCI6MTc2MTM3NTY0OH0.9JPajznin-OvOdLhAuysI7ivBomIWWjEMKb0Wqf2SKs
+
+{
+  "id": "68f33d4327e44ea4f38d7f20",
+  "status": "Shipped"
+}
+
+
+
