@@ -5,5 +5,5 @@ export const updateById = (id, updateObj) => {
 };
 
 export const getAllOrders = () => {
-  return Order.find();
+  return Order.find().sort({ createdAt: -1 });
 };
