@@ -14,6 +14,8 @@ import productRouter from "./src/routes/productRouter.js";
 
 import orderRouter from "./src/routes/orderRouter.js";
 
+import customerRouter from "./src/routes/customerRouter.js";
+
 const app = express();
 app.use(cors());
 app.use(express.json());
@@ -26,17 +28,22 @@ app.get("/", (req, res) => {
 app.use("/public", express.static("assets/productImages"));
 
 // auth router
-
 app.use("/api/v1/auth", authRouter);
+
 // category router
 app.use("/api/v1/category", categoryRouter);
 
+//product router
 app.use("/api/v1/products", productRouter);
 
-//user routes
+//user router
 app.use("/api/v1/user", userRouter);
 
+//order router
 app.use("/api/v1/orders", orderRouter);
+
+//customer router
+app.use("/api/v1/customer", customerRouter);
 
 mongooseConnect()
   .then(() => mongoConnect())
