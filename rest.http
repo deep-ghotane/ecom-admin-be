@@ -92,5 +92,8 @@ Authorization:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3RlckBnbWFpb
   "status": "Shipped"
 }
 
-
+### retrieve all the customer 
+GET {{apiURL}}/customer
+Content-Type: application/json
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3RlckBnbWFpbC5jb20iLCJpYXQiOjE3NjA5NTk0MDcsImV4cCI6MTc2MTA0NTgwN30.ruIEnLl8Wa5_H9kfXqt9LB7KNP8pmqzu1QH1SMLfL68
 
