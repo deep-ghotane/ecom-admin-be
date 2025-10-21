@@ -5,9 +5,12 @@ import {
   getProductsById,
   updateProductQuery,
 } from "../models/products/productModel.js";
-import { findByFilterandGetSomething } from "../models/categories/categoryModel.js";
 import { slugifyItem } from "../utils/slugify.js";
 import { uploadImages } from "../utils/cloudinaryUpload.js";
+import {
+  findCategoryByFilter,
+  updateCategoryQuery,
+} from "../models/categories/categoryModel.js";
 
 export const getAllProducts = async (req, res) => {
   try {
@@ -20,24 +23,31 @@ export const getAllProducts = async (req, res) => {
   }
 };
 export const addNewProduct = async (req, res) => {
-  const { category, ...payload } = req.body;
-  const slug = slugifyItem(payload.name);
-  const categoriesId = await findByFilterandGetSomething(
-    { name: { $in: category } },
-    "_id"
-  );
-  const categoriesIdArray = categoriesId.map((idObj) => idObj._id);
+  const { category, subCategory, ...payload } = req.body;
   const imageFiles = req.files;
+  const slug = slugifyItem(payload.name);
+  const categoryId = await findCategoryByFilter({ name: category });
+  const subCategoryId = await findCategoryByFilter({ name: subCategory });
+  const productObj = {
+    ...payload,
+    slug,
+    category: categoryId._id,
+    subCategory: subCategoryId._id,
+  };
   try {
     const cloudinaryResult = await uploadImages(imageFiles);
     const images = cloudinaryResult.map((res) => res.secure_url);
-    const product = await addProduct({
-      ...payload,
-      images,
-      category: categoriesIdArray,
-      slug,
+    productObj["images"] = images;
+    const product = await addProduct(productObj);
+
+    //add the product to the category collection as well.
+    //this creates many to many relation between product and categories
+
+    const categoryUpdate = await updateCategoryQuery(subCategoryId, {
+      products: [...subCategoryId.products, product._id],
     });
-    if (!product) {
+
+    if (!product || !categoryUpdate) {
       return res
         .status(500)
         .json({ status: "error", message: "Error adding product" });
@@ -46,6 +56,7 @@ export const addNewProduct = async (req, res) => {
       .status(200)
       .json({ status: "success", message: "Product added" });
   } catch (error) {
+    console.log(error.message);
     res.status(500).json({ status: "error", message: "Internal server error" });
   }
 };
@@ -80,6 +91,16 @@ export const deleteProduct = async (req, res) => {
   try {
     const { id } = req.body;
     const product = await deleteProductQuery(id);
+
+    const category = await findCategoryByFilter(product.subCategory);
+    const categoryUpdate = await updateCategoryQuery(category._id, {
+      products: category.products.filter((product) => product != product._id),
+    });
+
+    if (!product || !categoryUpdate)
+      return res
+        .status(500)
+        .json({ status: "error", message: "Error deleting product" });
     return res
       .status(200)
       .json({ status: "success", message: "Product deleted" });

@@ -1,16 +1,16 @@
 import mongoose from "mongoose";
 import {
   deleteCategoryQuery,
-  findByFilter,
   findBySlug,
   insertCategory,
   updateCategoryQuery,
+  getAllCategories,
 } from "../models/categories/categoryModel.js";
 import slugify from "slugify";
 
 export const fetchAllCategories = async (req, res, next) => {
   try {
-    let allCategories = await findByFilter();
+    let allCategories = await getAllCategories();
 
     const categories = allCategories.filter(
       (category) => category.parent === null

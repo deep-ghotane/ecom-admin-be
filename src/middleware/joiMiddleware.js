@@ -41,19 +41,13 @@ export const createUserByAdminValidation = (req, res, next) => {
 };
 
 export const addProductValidation = (req, res, next) => {
-  //convert category string to category array if only 1 item was sent
-  let { category } = req.body;
-  if (!Array.isArray(category)) {
-    category = [category];
-  }
-
-  req.body.category = category;
   let addProductSchema = Joi.object({
     name: Joi.string().required(),
     description: Joi.string().required(),
     price: Joi.number().required(),
     stock: Joi.number().required(),
-    category: Joi.array().items(Joi.string().required()).min(1).required(),
+    category: Joi.string().required(),
+    subCategory: Joi.string().required(),
   });
 
   joiValidator(addProductSchema, req, res, next);

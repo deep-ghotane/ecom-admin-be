@@ -10,8 +10,8 @@ export const findBySlug = (filter) => {
   return Category.findOne(filter);
 };
 
-export const findByFilter = (filter) => {
-  return Category.find(filter);
+export const findCategoryByFilter = (filter) => {
+  return Category.findOne(filter);
 };
 
 export const findByFilterandGetSomething = (filter, getItem) => {
