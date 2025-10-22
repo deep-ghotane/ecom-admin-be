@@ -69,21 +69,24 @@ export const updateProduct = async (req, res) => {
     const imageFiles = req.files;
     const product = await getProductsById(id);
 
-    const getCategory = await findCategoryByFilter({ _id: subCategory });
     const categoryUpdate = await updateCategoryQuery(subCategory, {
-      products: [...getCategory.products, product._id],
+      $addToSet: { products: product._id },
     });
 
     //change previous category table
-    const prevCategoryInfo = await findCategoryByFilter({ _id: prevCategory });
-    const filteredPrevCategoryProducts = prevCategoryInfo.filter(
-      (cat) => cat.products != id
-    );
-    const prevCatUpdate = await updateCategoryQuery(subCategory, {
-      products: filteredPrevCategoryProducts,
-    });
+    if (prevCategory !== subCategory) {
+      const prevCategoryInfo = await findCategoryByFilter({
+        _id: prevCategory,
+      });
+      const filteredPrevCategoryProducts = prevCategoryInfo.products.filter(
+        (product) => product != id
+      );
+      const prevCatUpdate = await updateCategoryQuery(prevCategory, {
+        products: filteredPrevCategoryProducts,
+      });
+    }
 
-    if (!product || !categoryUpdate || !prevCatUpdate)
+    if (!product || !categoryUpdate)
       res.status(404).json({ status: "error", message: "Invalid product" });
 
     let filteredImages = [];
@@ -106,7 +109,6 @@ export const updateProduct = async (req, res) => {
     }
 
     const finalPayload = { ...payload, slug, images, category, subCategory };
-    console.log(finalPayload);
     const result = await updateProductQuery(id, finalPayload);
 
     return res
