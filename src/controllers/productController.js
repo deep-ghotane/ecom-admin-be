@@ -63,27 +63,58 @@ export const addNewProduct = async (req, res) => {
 export const updateProduct = async (req, res) => {
   try {
     const { id } = req.params;
-    const { imagesToDelete, ...payload } = req.body;
+    const { imagesToDelete, category, subCategory, prevCategory, ...payload } =
+      req.body;
     const slug = slugifyItem(payload.name);
     const imageFiles = req.files;
     const product = await getProductsById(id);
-    if (!product)
+
+    const getCategory = await findCategoryByFilter({ _id: subCategory });
+    const categoryUpdate = await updateCategoryQuery(subCategory, {
+      products: [...getCategory.products, product._id],
+    });
+
+    //change previous category table
+    const prevCategoryInfo = await findCategoryByFilter({ _id: prevCategory });
+    const filteredPrevCategoryProducts = prevCategoryInfo.filter(
+      (cat) => cat.products != id
+    );
+    const prevCatUpdate = await updateCategoryQuery(subCategory, {
+      products: filteredPrevCategoryProducts,
+    });
+
+    if (!product || !categoryUpdate || !prevCatUpdate)
       res.status(404).json({ status: "error", message: "Invalid product" });
+
     let filteredImages = [];
+
     //filter the images array
     if (imagesToDelete.length > 0) {
       filteredImages = product.images.filter(
         (images) => !imagesToDelete.includes(images)
       );
     }
-    const cloudinaryResult = await uploadImages(imageFiles);
-    const cloudinaryImages = cloudinaryResult.map((image) => image.secure_url);
-    const images = filteredImages.concat(cloudinaryImages);
-    const result = await updateProductQuery(id, { ...payload, slug, images });
+    let images = [];
+    if (imageFiles.length > 0) {
+      const cloudinaryResult = await uploadImages(imageFiles);
+      const cloudinaryImages = cloudinaryResult.map(
+        (image) => image.secure_url
+      );
+      images = filteredImages.concat(cloudinaryImages);
+    } else {
+      images = product.images;
+    }
+
+    const finalPayload = { ...payload, slug, images, category, subCategory };
+    console.log(finalPayload);
+    const result = await updateProductQuery(id, finalPayload);
+
     return res
       .status(200)
       .json({ status: "success", message: "Product updated" });
   } catch (error) {
+    console.log(error.message);
+
     res.status(500).json({ status: "error", message: "Internal server error" });
   }
 };
@@ -105,6 +136,7 @@ export const deleteProduct = async (req, res) => {
       .status(200)
       .json({ status: "success", message: "Product deleted" });
   } catch (error) {
+    console.log(error.message);
     res.status(500).json({ status: "error", message: "Internal server error" });
   }
 };
