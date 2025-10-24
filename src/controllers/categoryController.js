@@ -36,7 +36,7 @@ export const fetchAllCategories = async (req, res, next) => {
 export const createCategory = async (req, res, next) => {
   try {
     let categoryObj = { ...req.body };
-
+    console.log(categoryObj);
     if (
       !categoryObj.parent ||
       categoryObj.parent === "null" ||
@@ -58,9 +58,9 @@ export const createCategory = async (req, res, next) => {
 
     categoryObj.slug = baseSlug;
 
-    let addCategory = await insertCategory(categoryObj);
+    let addCategory = await insertCategory({ ...categoryObj, products: [] });
 
-    return res.json({
+    return res.status(200).json({
       status: "success",
       message: "Category created successfully",
       data: addCategory,

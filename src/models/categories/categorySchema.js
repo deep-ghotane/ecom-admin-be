@@ -9,10 +9,6 @@ const categorySchema = new mongoose.Schema(
     slug: {
       type: String,
       required: true,
-    },
-    slug: {
-      type: String,
-      required: true,
       unique: true,
     },
     parent: {
@@ -23,7 +19,6 @@ const categorySchema = new mongoose.Schema(
       {
         type: mongoose.Schema.Types.ObjectId,
         ref: "product",
-        unique: true,
       },
     ],
   },
